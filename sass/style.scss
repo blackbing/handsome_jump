@@ -1,61 +1,53 @@
 @import 'compass/utilities';
 @import 'compass/css3';
 
-body {
-  background: #00000d url('../images/bg.jpg') no-repeat;
-  background-size: cover;
-  padding: 40px 0;
-  -webkit-perspective: 1000px;
-}
-
-#main_box {
-  position: relative;
-  background: url('../images/potter.jpg') center no-repeat;
-  width: 800px;
-  min-height: 1480px;
-  @include box-shadow(#fff 0 0 100px);
-  -webkit-transform: rotateY( 45deg );
-}
-
-#main_box.rollback {
-  @include transition(all 1s ease-in-out);
-  -webkit-transform: rotateY( 0 );
-}
-
-#main_box > .pic-1 {
-  position: relative;
-  top: 503px;
-  left: 218px;
-  width: 570px;
-  height: 267px;
-  overflow: hidden;
-}
-
-.pic-1 > img {
-  position: absolute;
+body{
   width: 100%;
-  left: 0;
+  height: 100%;
 }
-
-.pic-1 > img.gif {
-  display: none;
-}
-
-.pic-2 {
-  position: relative;
-  width: 274px;
-  height: 198px;
-  left: 510px;
-  top: 640px;
-  overflow: hidden;
-}
-
-.pic-2 > img {
+.handsome-jump{
   position: absolute;
-  width: 100%;
-  left: 0;
+  overflow:hidden;
+  width:100%;
+  height:100%;
 }
 
-.pic-2 > img.gif {
-  display: none;
+.center{
+ margin: auto;
+ top:0;right:0;bottom:0;left:0;
+}
+.circle {
+ position:absolute;
+ width: 200%;
+}
+.circle-inner {
+ position:absolute;
+ background-color: #FFF;
+ border: 1px solid #CCC;
+ height: -webkit-calc(100% - 250px);
+ border-radius: 50%;
+ width: -webkit-calc(100% - 250px);
+}
+
+.handsome-jump ul.connected{
+  width: 100%;
+  height: 100%;
+  margin: auto;
+  left: 100px;
+  top: 100px;
+  right: 100px;
+  bottom: 100px;
+  position: absolute;
+  z-index: 5;
+}
+
+.handsome-jump ul.connected > li{
+  width: 50px;
+  height: 50px;
+  display: inline-block;
+  cursor: pointer;
+  background-repeat: no-repeat;
+  margin: 25px;
+  -webkit-box-shadow: 0px 0px 15px 2px #000;
+  box-shadow: 0px 0px 15px 2px #000;
 }
