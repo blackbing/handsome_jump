@@ -28,11 +28,10 @@ define (require)->
         #marginLeft: -($circle.width() - $handsomeJump.width()) / 2
         marginTop: -($circle.height() - $handsomeJump.height()) / 2 + 500
 
-      ###
-      while $(".connected>.avator").length < 256
-        $(".connected").append "<li class=\"avator img-circle\" style=\"background-image:url(https://fbcdn-profile-a.akamaihd.net/hprofile-ak-ash4/372355_582724207_361817571_q.jpg)\"></li>"
+      while $(".connected>li").length < 40
+        #$(".connected").append "<li class='avator img-circle'></li>"
+        $(".connected").append "<li></li>"
 
-      ###
 
 
     initialize: ()->

@@ -2,30 +2,65 @@
 (function() {
 
   define(function(require) {
-    var URL, scanWorker_script, wifiscan;
-    scanWorker_script = require('text!./scanWorker.js');
+    var URL, wifiscan;
     URL = window.URL || window.webkitURL;
-    console.log(scanWorker_script);
-    return wifiscan = {
+    wifiscan = {
+      ips: {},
+      portocol: 'http',
+      port: 7777,
+      callback_fun: {
+        getStatusCallback: 'gsc',
+        getInfoCallback: 'gic'
+      },
       scan: function(privateIP) {
-        var scanIPList, worker, workerBlob, workerURL;
+        var ip, scanIPList, _i, _len, _results;
         scanIPList = this.getIPListFromIP(privateIP);
-        workerBlob = new Blob([scanWorker_script]);
-        workerURL = URL.createObjectURL(workerBlob);
-        worker = new Worker(workerURL);
-        worker.onmessage = function(e) {
-          var data;
-          console.log(e);
-          data = e.data;
-          switch (data.msgType) {
-            case 'debug':
-              return console.log(data[data.msgType]);
+        _results = [];
+        for (_i = 0, _len = scanIPList.length; _i < _len; _i++) {
+          ip = scanIPList[_i];
+          if (ip !== privateIP) {
+            _results.push(this.getInfo(ip).done(function(res) {
+              return console.log(res);
+            }));
+          } else {
+            _results.push(console.log(privateIP));
           }
-        };
-        return worker.postMessage({
-          msgType: 'data',
-          data: scanIPList
+        }
+        return _results;
+      },
+      getInfo: function(ip) {
+        var _dfr,
+          _this = this;
+        _dfr = this.getStatus(ip);
+        return _dfr.pipe(function(res) {
+          var url;
+          url = "//" + ip + ":" + _this.port + "/getinfo?callback=" + _this.callback_fun.getInfoCallback;
+          return $.getScript(url, function(res) {
+            return console.log('getScripta', res);
+          });
         });
+      },
+      getStatus: function(ip) {
+        var url;
+        url = "//" + ip + ":" + this.port + "/getstatus?callback=" + this.callback_fun.getStatusCallback;
+        return $.getScript(url);
+      },
+      getStatusCallback: function(res) {
+        return console.log('getStatusCallback', res);
+      },
+      getInfoCallback: function(res) {
+        var $avators, avatorUrl, ip, random_idx;
+        console.log('getInfoCallback', res);
+        avatorUrl = res.url;
+        ip = res.ip;
+        if (!(this.ips[ip] != null)) {
+          $avators = $('.connected li').not('.avator');
+          random_idx = Math.floor(Math.random() * $avators.length);
+          $avators.eq(random_idx).hide().addClass('avator img-circle').css({
+            backgroundImage: "url(" + avatorUrl + ")"
+          }).fadeIn();
+          return this.ips[ip] = res;
+        }
       },
       getIPListFromIP: function(privateIP) {
         var i, scanIPList, sp_ip, sp_part1, sp_part2, _i;
@@ -39,6 +74,13 @@
         return scanIPList;
       }
     };
+    window[wifiscan.callback_fun.getStatusCallback] = function() {
+      return wifiscan.getStatusCallback.apply(wifiscan, arguments);
+    };
+    window[wifiscan.callback_fun.getInfoCallback] = function() {
+      return wifiscan.getInfoCallback.apply(wifiscan, arguments);
+    };
+    return wifiscan;
   });
 
 }).call(this);

@@ -7,7 +7,7 @@
     return CircleView = Backbone.View.extend({
       className: 'handsome-jump center',
       resized: function() {
-        var $c, $circle, $handsomeJump, $inner, innerWidth;
+        var $c, $circle, $handsomeJump, $inner, innerWidth, _results;
         console.log('resized');
         $circle = this.$(".circle");
         $inner = $circle;
@@ -24,14 +24,14 @@
           $inner.append($c);
           $inner = $c;
         }
-        return $circle.css({
+        $circle.css({
           marginTop: -($circle.height() - $handsomeJump.height()) / 2 + 500
         });
-        /*
-              while $(".connected>.avator").length < 256
-                $(".connected").append "<li class=\"avator img-circle\" style=\"background-image:url(https://fbcdn-profile-a.akamaihd.net/hprofile-ak-ash4/372355_582724207_361817571_q.jpg)\"></li>"
-        */
-
+        _results = [];
+        while ($(".connected>li").length < 40) {
+          _results.push($(".connected").append("<li></li>"));
+        }
+        return _results;
       },
       initialize: function() {
         return console.log('initialize');
