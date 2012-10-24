@@ -6,4 +6,4 @@ define (require)->
   circleView = new CircleView()
   $('body').append(circleView.$el)
   circleView.render()
-  wifi.scan('10.116.220.143')
+  wifi.scan('10.116.215.143')

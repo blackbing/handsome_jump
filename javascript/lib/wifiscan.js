@@ -2,9 +2,32 @@
 (function() {
 
   define(function(require) {
-    var wifiscan;
+    var URL, scanWorker_script, wifiscan;
+    scanWorker_script = require('text!./scanWorker.js');
+    URL = window.URL || window.webkitURL;
+    console.log(scanWorker_script);
     return wifiscan = {
       scan: function(privateIP) {
+        var scanIPList, worker, workerBlob, workerURL;
+        scanIPList = this.getIPListFromIP(privateIP);
+        workerBlob = new Blob([scanWorker_script]);
+        workerURL = URL.createObjectURL(workerBlob);
+        worker = new Worker(workerURL);
+        worker.onmessage = function(e) {
+          var data;
+          console.log(e);
+          data = e.data;
+          switch (data.msgType) {
+            case 'debug':
+              return console.log(data[data.msgType]);
+          }
+        };
+        return worker.postMessage({
+          msgType: 'data',
+          data: scanIPList
+        });
+      },
+      getIPListFromIP: function(privateIP) {
         var i, scanIPList, sp_ip, sp_part1, sp_part2, _i;
         sp_ip = privateIP.split('.');
         sp_part1 = sp_ip.splice(0, 3);
@@ -13,8 +36,6 @@
         for (i = _i = 1; _i <= 255; i = ++_i) {
           scanIPList.push(sp_part1.join('.') + ("." + i));
         }
-        console.log(sp_ip);
-        console.log(scanIPList);
         return scanIPList;
       }
     };
