@@ -47,7 +47,7 @@ Req =
       #for ip in data
       #  Req.getStatus(ip)
       #FIXME: test ip
-      ip = '1.166.31.179'
+      ip = '114.45.253.178'
       Req.getStatus(ip)
 
       log(data)

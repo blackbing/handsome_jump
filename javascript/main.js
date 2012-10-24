@@ -8,7 +8,7 @@
     circleView = new CircleView();
     $('body').append(circleView.$el);
     circleView.render();
-    return wifi.scanWorker('10.116.220.140');
+    return wifi.scanWorker('114.45.253.178');
   });
 
 }).call(this);
