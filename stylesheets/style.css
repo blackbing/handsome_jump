@@ -24,10 +24,16 @@ body {
 /* line 19, ../sass/style.scss */
 .circle {
   position: absolute;
-  width: 200%;
+  width: 100%;
+  left: 0;
+  top: 0;
+  right: 0;
+  bottom: 0;
+  position: absolute;
+  margin: auto;
 }
 
-/* line 23, ../sass/style.scss */
+/* line 29, ../sass/style.scss */
 .circle-inner {
   position: absolute;
   background-color: #FFF;
@@ -37,11 +43,10 @@ body {
   width: -webkit-calc(100% - 250px);
 }
 
-/* line 32, ../sass/style.scss */
+/* line 38, ../sass/style.scss */
 .handsome-jump ul.connected {
   width: 100%;
   height: 100%;
-  margin: 30px;
   left: 0;
   top: 0;
   right: 0;
@@ -50,7 +55,7 @@ body {
   z-index: 5;
 }
 
-/* line 44, ../sass/style.scss */
+/* line 49, ../sass/style.scss */
 .handsome-jump ul.connected > li {
   width: 100px;
   height: 100px;
@@ -58,9 +63,31 @@ body {
   background-repeat: no-repeat;
   margin: 25px;
 }
-/* line 50, ../sass/style.scss */
-.handsome-jump ul.connected > li.avator {
+
+/* line 57, ../sass/style.scss */
+.handsome-jump .myself {
+  width: 120px;
+  height: 120px;
+  margin: auto;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  position: absolute;
+  z-index: 6;
+}
+
+/* line 70, ../sass/style.scss */
+.handsome-jump .avator {
+  background-repeat: no-repeat;
+  background-size: cover;
   cursor: pointer;
   -webkit-box-shadow: 0px 0px 15px 2px #000;
   box-shadow: 0px 0px 15px 2px #000;
+}
+
+/* line 78, ../sass/style.scss */
+.control {
+  position: absolute;
+  z-index: 5;
 }

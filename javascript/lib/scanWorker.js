@@ -12,11 +12,18 @@
       getStatusCallback: 'gsc',
       getInfoCallback: 'gic'
     },
+    requestJSONP: function(url) {
+      try {
+        return _self.importScripts(url);
+      } catch (e) {
+        return 'do nothing';
+      }
+    },
     getStatus: function(ip) {
       var url;
       url = "http://" + ip + ":" + this.port + "/getstatus?callback=" + this.callback_fun.getStatusCallback;
       log(url);
-      return _self.importScripts(url);
+      return this.requestJSONP(url);
     },
     getStatusCallback: function(res) {
       var ip;
@@ -27,7 +34,7 @@
     getInfo: function(ip) {
       var url;
       url = "http://" + ip + ":" + this.port + "/getinfo?callback=" + this.callback_fun.getInfoCallback;
-      return _self.importScripts(url);
+      return this.requestJSONP(url);
     },
     getInfoCallback: function(res) {
       var avatorUrl, ip;
@@ -51,14 +58,22 @@
   };
 
   this.onmessage = function(e) {
-    var data, ip, msgType;
+    var data, ip, msgType, scanIPList, _i, _len;
     data = e.data;
     msgType = data.msgType;
+    data = data[data.msgType];
     switch (msgType) {
-      case 'data':
-        data = data[data.msgType];
-        ip = '114.45.253.178';
+      case 'ip':
+        log(data);
+        ip = data;
         Req.getStatus(ip);
+        break;
+      case 'scanIPList':
+        scanIPList = data;
+        for (_i = 0, _len = data.length; _i < _len; _i++) {
+          ip = data[_i];
+          Req.getStatus(ip);
+        }
         log(data);
     }
     return log('postMessage from worker ok');

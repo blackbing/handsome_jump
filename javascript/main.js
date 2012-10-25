@@ -2,13 +2,11 @@
 (function() {
 
   define(function(require) {
-    var CircleView, circleView, wifi;
-    wifi = require('./lib/wifiscan');
+    var CircleView, circleView;
     CircleView = require('./circleView');
     circleView = new CircleView();
     $('body').append(circleView.$el);
-    circleView.render();
-    return wifi.scanWorker('114.45.253.178');
+    return circleView.render();
   });
 
 }).call(this);

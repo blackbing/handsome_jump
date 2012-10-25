@@ -2,17 +2,24 @@
 (function() {
 
   define(function(require) {
-    var CircleView, circleView_tpl;
+    var CircleView, circleView_tpl, wifi;
+    wifi = require('./lib/wifiscan');
     circleView_tpl = require('hbs!./circle');
     return CircleView = Backbone.View.extend({
       className: 'handsome-jump center',
-      resized: function() {
+      events: {
+        'click #refresh': 'refreshIP'
+      },
+      refreshIP: function() {
+        return wifi.scan();
+      },
+      drawCircle: function() {
         var $c, $circle, $handsomeJump, $inner, innerWidth, _results;
         console.log('resized');
         $circle = this.$(".circle");
         $inner = $circle;
         $handsomeJump = this.$(".handsome-jump");
-        innerWidth = $('body').width();
+        innerWidth = $circle.width();
         $circle.css({
           height: innerWidth,
           width: innerWidth
@@ -24,9 +31,7 @@
           $inner.append($c);
           $inner = $c;
         }
-        $circle.css({
-          marginTop: -($circle.height() - $handsomeJump.height()) / 2 + 500
-        });
+        this.$('.circle-inner').last().append('<div class="myself center" />');
         _results = [];
         while ($(".connected>li").length < 40) {
           _results.push($(".connected").append("<li></li>"));
@@ -41,7 +46,8 @@
         console.log('render');
         tpl = circleView_tpl();
         this.$el.append(tpl);
-        return this.resized();
+        this.drawCircle();
+        return this.refreshIP();
       },
       remove: function() {
         return console.log('remove');

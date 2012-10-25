@@ -1,19 +1,26 @@
 define (require)->
 
+  wifi = require './lib/wifiscan'
   circleView_tpl = require 'hbs!./circle'
 
   CircleView = Backbone.View.extend
     className: 'handsome-jump center'
 
-    resized: ()->
+    events:
+      'click #refresh': 'refreshIP'
+
+    refreshIP: ()->
+      wifi.scan()
+
+
+    drawCircle: ()->
 
       console.log 'resized'
 
       $circle = @$(".circle")
       $inner = $circle
       $handsomeJump = @$(".handsome-jump")
-      #innerWidth = $circle.prop('innerWidth')
-      innerWidth = $('body').width()
+      innerWidth = $circle.width()
       $circle.css
         height: innerWidth
         width: innerWidth
@@ -24,12 +31,12 @@ define (require)->
         $c = $("<div class=\"circle-inner center\" />")
         $inner.append $c
         $inner = $c
-      $circle.css
-        #marginLeft: -($circle.width() - $handsomeJump.width()) / 2
-        marginTop: -($circle.height() - $handsomeJump.height()) / 2 + 500
+      @$('.circle-inner').last().append('<div class="myself center" />')
+
+
+
 
       while $(".connected>li").length < 40
-        #$(".connected").append "<li class='avator img-circle'></li>"
         $(".connected").append "<li></li>"
 
 
@@ -42,7 +49,8 @@ define (require)->
       tpl = circleView_tpl()
       @$el.append tpl
 
-      @resized()
+      @drawCircle()
+      @refreshIP()
     remove: ()->
       console.log 'remove'
 
