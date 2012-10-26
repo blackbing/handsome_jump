@@ -11,7 +11,27 @@
         'click #refresh': 'refreshIP'
       },
       refreshIP: function() {
-        return wifi.scan();
+        var callbacks, scanCallbacks,
+          _this = this;
+        callbacks = $.Callbacks();
+        callbacks.add(function() {
+          return _this.ipfound(_this, arguments);
+        });
+        return scanCallbacks = wifi.scan(callbacks);
+      },
+      ipfound: function(data) {
+        var $avators, random_idx;
+        if (ip === this.mySelfIP) {
+          return $('.myself').hide().addClass('avator img-circle').css({
+            backgroundImage: "url(" + avatorUrl + ")"
+          }).fadeIn();
+        } else {
+          $avators = $('.connected li').not('.avator');
+          random_idx = Math.floor(Math.random() * $avators.length);
+          return $avators.eq(random_idx).hide().addClass('avator img-circle').css({
+            backgroundImage: "url(" + avatorUrl + ")"
+          }).fadeIn();
+        }
       },
       drawCircle: function() {
         var $c, $circle, $handsomeJump, $inner, innerWidth, _results;

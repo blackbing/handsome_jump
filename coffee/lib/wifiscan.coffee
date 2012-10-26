@@ -12,13 +12,17 @@ define (require)->
       getInfoCallback: 'gic'
     scan: ()->
       #FIXME: test ip
-      mySelfIP = '10.116.220.143'
-      scanIPList = @getIPListFromIP(mySelfIP)
+      mySelfIP = '10.116.220.12'
       @mySelfIP = mySelfIP
-      for ip in scanIPList
-        @getInfo(ip).done((res)->
-          console.log res
-        )
+      @getInfo(@mySelfIP)
+
+      @getServerList(mySelfIP).done((req)=>
+        scanIPList = req
+        for ip in scanIPList
+          @getInfo(ip).done((res)->
+            console.log res
+          )
+      )
 
     createScanWorker: ()->
       scanWorker_script = require 'text!./scanWorker.js'
@@ -74,7 +78,32 @@ define (require)->
       ).fadeIn()
     ###
 
+    getServerList: (ip)->
+      ###
+      url = "//#{ip}:#{@port}/getserverlist"
+      _dfr = $.get(url)
+      ###
+      #FIXME: for testing
+      _dfr = $.Deferred()
+      testData = {
+        0: "10.116.220.12"
+        1: "10.116.220.82"
+      }
+      #testing data end
+
+      filter = _dfr.pipe((res)->
+        console.log 'filter', res
+        arr = []
+        for idx of res
+          ip = res[idx]
+          arr.push ip
+        arr
+      )
+      _dfr.resolve(testData)
+      filter
+
     getIPListFromIP: (privateIP)->
+      _dfr = $.Deferred()
       sp_ip = privateIP.split('.')
       sp_part1 = sp_ip.splice(0, 3)
       sp_part2 = sp_ip[3]
@@ -82,7 +111,8 @@ define (require)->
       for i in [0..254]
         scanIPList.push(sp_part1.join('.')+".#{i}")
 
-      scanIPList
+      _dfr.resolve(scanIPList)
+      _dfr
 
     getInfo: (ip)->
       _dfr = @getStatus(ip)
@@ -105,26 +135,9 @@ define (require)->
       ip = res.ip
 
       if not @ips[ip]?
-        if ip is @mySelfIP
-          $('.myself')
-            .hide()
-            .addClass('avator img-circle')
-            .css(
-              backgroundImage: "url(#{avatorUrl})"
-            )
-            .fadeIn()
+        if @callbacks.getInfoCallback?
+          @callbacks.getInfoCallback.fire(res)
 
-        else
-          ##FIXME: seperate with UI
-          $avators = $('.connected li').not('.avator')
-          random_idx = Math.floor(Math.random()*$avators.length)
-          $avators.eq(random_idx)
-            .hide()
-            .addClass('avator img-circle')
-            .css(
-              backgroundImage: "url(#{avatorUrl})"
-            )
-            .fadeIn()
 
         @ips[ip] = res
 

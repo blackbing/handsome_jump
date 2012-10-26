@@ -10,7 +10,36 @@ define (require)->
       'click #refresh': 'refreshIP'
 
     refreshIP: ()->
-      wifi.scan()
+      ##
+      callbacks = $.Callbacks()
+      callbacks.add(=>
+        @ipfound(@, arguments)
+      )
+      scanCallbacks = wifi.scan(callbacks)
+
+
+    ipfound: (data)->
+        if ip is @mySelfIP
+          $('.myself')
+            .hide()
+            .addClass('avator img-circle')
+            .css(
+              backgroundImage: "url(#{avatorUrl})"
+            )
+            .fadeIn()
+
+        else
+
+          $avators = $('.connected li').not('.avator')
+          random_idx = Math.floor(Math.random()*$avators.length)
+          $avators.eq(random_idx)
+            .hide()
+            .addClass('avator img-circle')
+            .css(
+              backgroundImage: "url(#{avatorUrl})"
+            )
+            .fadeIn()
+
 
 
     drawCircle: ()->

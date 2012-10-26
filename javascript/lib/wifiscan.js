@@ -13,18 +13,23 @@
         getInfoCallback: 'gic'
       },
       scan: function() {
-        var ip, mySelfIP, scanIPList, _i, _len, _results;
-        mySelfIP = '10.116.220.143';
-        scanIPList = this.getIPListFromIP(mySelfIP);
+        var mySelfIP,
+          _this = this;
+        mySelfIP = '10.116.220.12';
         this.mySelfIP = mySelfIP;
-        _results = [];
-        for (_i = 0, _len = scanIPList.length; _i < _len; _i++) {
-          ip = scanIPList[_i];
-          _results.push(this.getInfo(ip).done(function(res) {
-            return console.log(res);
-          }));
-        }
-        return _results;
+        this.getInfo(this.mySelfIP);
+        return this.getServerList(mySelfIP).done(function(req) {
+          var ip, scanIPList, _i, _len, _results;
+          scanIPList = req;
+          _results = [];
+          for (_i = 0, _len = scanIPList.length; _i < _len; _i++) {
+            ip = scanIPList[_i];
+            _results.push(_this.getInfo(ip).done(function(res) {
+              return console.log(res);
+            }));
+          }
+          return _results;
+        });
       },
       createScanWorker: function() {
         var scanWorker_script, worker, workerBlob, workerURL,
@@ -84,8 +89,34 @@
             ).fadeIn()
       */
 
+      getServerList: function(ip) {
+        /*
+              url = "//#{ip}:#{@port}/getserverlist"
+              _dfr = $.get(url)
+        */
+
+        var filter, testData, _dfr;
+        _dfr = $.Deferred();
+        testData = {
+          0: "10.116.220.12",
+          1: "10.116.220.82"
+        };
+        filter = _dfr.pipe(function(res) {
+          var arr, idx;
+          console.log('filter', res);
+          arr = [];
+          for (idx in res) {
+            ip = res[idx];
+            arr.push(ip);
+          }
+          return arr;
+        });
+        _dfr.resolve(testData);
+        return filter;
+      },
       getIPListFromIP: function(privateIP) {
-        var i, scanIPList, sp_ip, sp_part1, sp_part2, _i;
+        var i, scanIPList, sp_ip, sp_part1, sp_part2, _dfr, _i;
+        _dfr = $.Deferred();
         sp_ip = privateIP.split('.');
         sp_part1 = sp_ip.splice(0, 3);
         sp_part2 = sp_ip[3];
@@ -93,7 +124,8 @@
         for (i = _i = 0; _i <= 254; i = ++_i) {
           scanIPList.push(sp_part1.join('.') + ("." + i));
         }
-        return scanIPList;
+        _dfr.resolve(scanIPList);
+        return _dfr;
       },
       getInfo: function(ip) {
         var _dfr,
@@ -115,21 +147,13 @@
         return console.log('getStatusCallback', res);
       },
       getInfoCallback: function(res) {
-        var $avators, avatorUrl, ip, random_idx;
+        var avatorUrl, ip;
         console.log('getInfoCallback', res);
         avatorUrl = res.url;
         ip = res.ip;
         if (!(this.ips[ip] != null)) {
-          if (ip === this.mySelfIP) {
-            $('.myself').hide().addClass('avator img-circle').css({
-              backgroundImage: "url(" + avatorUrl + ")"
-            }).fadeIn();
-          } else {
-            $avators = $('.connected li').not('.avator');
-            random_idx = Math.floor(Math.random() * $avators.length);
-            $avators.eq(random_idx).hide().addClass('avator img-circle').css({
-              backgroundImage: "url(" + avatorUrl + ")"
-            }).fadeIn();
+          if (this.callbacks.getInfoCallback != null) {
+            this.callbacks.getInfoCallback.fire(res);
           }
           return this.ips[ip] = res;
         }
