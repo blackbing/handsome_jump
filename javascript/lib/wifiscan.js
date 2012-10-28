@@ -5,19 +5,23 @@
     var URL, wifiscan;
     URL = window.URL || window.webkitURL;
     wifiscan = {
+      mySelfIP: (function() {
+        return '192.168.0.104';
+      })(),
       ips: {},
       portocol: 'http',
       port: 7777,
+      callbacks: {},
       callback_fun: {
         getStatusCallback: 'gsc',
         getInfoCallback: 'gic'
       },
-      scan: function() {
+      scan: function(callbacks) {
         var mySelfIP,
           _this = this;
-        mySelfIP = '10.116.220.12';
-        this.mySelfIP = mySelfIP;
-        this.getInfo(this.mySelfIP);
+        mySelfIP = this.mySelfIP;
+        this.getInfo(mySelfIP);
+        this.callbacks.getInfoCallback = callbacks;
         return this.getServerList(mySelfIP).done(function(req) {
           var ip, scanIPList, _i, _len, _results;
           scanIPList = req;
@@ -152,7 +156,7 @@
         avatorUrl = res.url;
         ip = res.ip;
         if (!(this.ips[ip] != null)) {
-          if (this.callbacks.getInfoCallback != null) {
+          if ((this.callbacks != null) && (this.callbacks.getInfoCallback != null)) {
             this.callbacks.getInfoCallback.fire(res);
           }
           return this.ips[ip] = res;

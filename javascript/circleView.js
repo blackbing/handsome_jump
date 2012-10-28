@@ -15,13 +15,17 @@
           _this = this;
         callbacks = $.Callbacks();
         callbacks.add(function() {
-          return _this.ipfound(_this, arguments);
+          console.log('callbacks');
+          return _this.ipfound.apply(_this, arguments);
         });
         return scanCallbacks = wifi.scan(callbacks);
       },
       ipfound: function(data) {
-        var $avators, random_idx;
-        if (ip === this.mySelfIP) {
+        var $avators, avatorUrl, ip, random_idx;
+        console.log('ipfound', data);
+        ip = data.ip;
+        avatorUrl = data.url;
+        if (ip === wifi.mySelfIP) {
           return $('.myself').hide().addClass('avator img-circle').css({
             backgroundImage: "url(" + avatorUrl + ")"
           }).fadeIn();

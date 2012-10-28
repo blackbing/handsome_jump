@@ -4,17 +4,21 @@ define (require)->
 
 
   wifiscan =
+    mySelfIP: do ->
+      #FIXME: test ip
+      return '192.168.0.104'
+
     ips: {}
     portocol: 'http'
     port: 7777
+    callbacks: {}
     callback_fun:
       getStatusCallback: 'gsc'
       getInfoCallback: 'gic'
-    scan: ()->
-      #FIXME: test ip
-      mySelfIP = '10.116.220.12'
-      @mySelfIP = mySelfIP
-      @getInfo(@mySelfIP)
+    scan: (callbacks)->
+      mySelfIP = @mySelfIP
+      @getInfo(mySelfIP)
+      @callbacks.getInfoCallback = callbacks
 
       @getServerList(mySelfIP).done((req)=>
         scanIPList = req
@@ -135,7 +139,7 @@ define (require)->
       ip = res.ip
 
       if not @ips[ip]?
-        if @callbacks.getInfoCallback?
+        if @callbacks? and @callbacks.getInfoCallback?
           @callbacks.getInfoCallback.fire(res)
 
 

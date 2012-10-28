@@ -13,32 +13,36 @@ define (require)->
       ##
       callbacks = $.Callbacks()
       callbacks.add(=>
-        @ipfound(@, arguments)
+        console.log 'callbacks'
+        @ipfound.apply(@, arguments)
       )
       scanCallbacks = wifi.scan(callbacks)
 
 
     ipfound: (data)->
-        if ip is @mySelfIP
-          $('.myself')
-            .hide()
-            .addClass('avator img-circle')
-            .css(
-              backgroundImage: "url(#{avatorUrl})"
-            )
-            .fadeIn()
+      console.log('ipfound', data)
+      ip = data.ip
+      avatorUrl = data.url
+      if ip is wifi.mySelfIP
+        $('.myself')
+          .hide()
+          .addClass('avator img-circle')
+          .css(
+            backgroundImage: "url(#{avatorUrl})"
+          )
+          .fadeIn()
 
-        else
+      else
 
-          $avators = $('.connected li').not('.avator')
-          random_idx = Math.floor(Math.random()*$avators.length)
-          $avators.eq(random_idx)
-            .hide()
-            .addClass('avator img-circle')
-            .css(
-              backgroundImage: "url(#{avatorUrl})"
-            )
-            .fadeIn()
+        $avators = $('.connected li').not('.avator')
+        random_idx = Math.floor(Math.random()*$avators.length)
+        $avators.eq(random_idx)
+          .hide()
+          .addClass('avator img-circle')
+          .css(
+            backgroundImage: "url(#{avatorUrl})"
+          )
+          .fadeIn()
 
 
 
