@@ -54,20 +54,33 @@
         }
       },
       getBlankAvatorPos: (function() {
-        var avator;
+        var avator, getRandom, radius_min;
         avator = {
           width: 100,
           height: 100
         };
+        radius_min = 200;
+        getRandom = function() {
+          var r, radius_max, theta;
+          radius_max = radius_min + 250;
+          r = (Math.random() * (radius_max - radius_min)) + radius_min;
+          theta = Math.random() * 360;
+          return [r, theta];
+        };
         return function() {
-          var canvas, pos;
+          var canvas, pos, r, ran, theta, x, y;
           canvas = {
             width: this.$('.connected').width(),
             height: this.$('.connected').height()
           };
+          ran = getRandom();
+          r = ran[0];
+          theta = ran[1];
+          x = (r * Math.cos(theta)) + canvas.width / 2;
+          y = r * Math.sin(theta) + canvas.height / 2;
           return pos = {
-            left: Math.floor(Math.random() * (canvas.width - avator.width)),
-            top: Math.floor(Math.random() * (canvas.height - avator.height))
+            left: x - (avator.width / 2),
+            top: y - (avator.height / 2)
           };
         };
       })(),

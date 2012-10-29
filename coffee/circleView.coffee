@@ -59,14 +59,29 @@ define (require)->
       avator =
         width: 100
         height: 100
+      radius_min = 200
+      getRandom = ()->
+        radius_max = radius_min + 250
+        r = (Math.random()*(radius_max-radius_min)) + radius_min
+        theta = Math.random() * 360
+        [r, theta]
+
       ->
         canvas =
           width: @$('.connected').width()
           height: @$('.connected').height()
 
+        #radius_max = Math.min(canvas.width, canvas.height)/2
+        ran = getRandom()
+        r = ran[0]
+        theta = ran[1]
+
+        x = (r * Math.cos(theta)) + canvas.width/2
+        y = r * Math.sin(theta) + canvas.height/2
+
         pos =
-          left : Math.floor( Math.random() * (canvas.width - avator.width))
-          top : Math.floor( Math.random() * (canvas.height- avator.height))
+          left : x-(avator.width/2)
+          top : y-(avator.height/2)
 
     drawCircle: ()->
 
