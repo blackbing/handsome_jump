@@ -45,7 +45,7 @@ define (require)->
       showIdx++
       if showIdx < demoData.length
 
-        delay = Math.random() * 10 * 500
+        delay = Math.random() * 10 * 50
 
         setTimeout(=>
           args.callee.apply(@, args)
@@ -53,7 +53,7 @@ define (require)->
     show: (circleView)->
       setTimeout(=>
         @_show(circleView)
-      , 1500)
+      , 100)
 
 
 

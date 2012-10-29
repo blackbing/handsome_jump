@@ -40,7 +40,7 @@
         circleView.ipfound(d_data);
         showIdx++;
         if (showIdx < demoData.length) {
-          delay = Math.random() * 10 * 500;
+          delay = Math.random() * 10 * 50;
           return setTimeout(function() {
             return args.callee.apply(_this, args);
           }, delay);
@@ -50,7 +50,7 @@
         var _this = this;
         return setTimeout(function() {
           return _this._show(circleView);
-        }, 1500);
+        }, 100);
       }
     };
   });

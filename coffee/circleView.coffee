@@ -34,6 +34,7 @@ define (require)->
 
       else
 
+        ###
         $avators = $('.connected li').not('.avator')
         random_idx = Math.floor(Math.random()*$avators.length)
         $avators.eq(random_idx)
@@ -43,12 +44,32 @@ define (require)->
             backgroundImage: "url(#{avatorUrl})"
           )
           .fadeIn()
+        ###
+        avatorPos = @getBlankAvatorPos()
+        $avator = $('<div />',
+          class: 'avator img-circle'
+        ).css(
+          backgroundImage: "url(#{avatorUrl})"
+          left: avatorPos.left
+          top: avatorPos.top
+        )
+        @$('.connected').append($avator)
 
+    getBlankAvatorPos: do ->
+      avator =
+        width: 100
+        height: 100
+      ->
+        canvas =
+          width: @$('.connected').width()
+          height: @$('.connected').height()
 
+        pos =
+          left : Math.floor( Math.random() * (canvas.width - avator.width))
+          top : Math.floor( Math.random() * (canvas.height- avator.height))
 
     drawCircle: ()->
 
-      console.log 'resized'
 
       $circle = @$(".circle")
       $inner = $circle
@@ -58,9 +79,7 @@ define (require)->
         height: innerWidth
         width: innerWidth
 
-      console.log $circle, innerWidth
       while $inner.width() > 300
-        console.log $inner.width()
         $c = $("<div class=\"circle-inner center\" />")
         $inner.append $c
         $inner = $c
@@ -69,8 +88,8 @@ define (require)->
 
 
 
-      while $(".connected>li").length < 40
-        $(".connected").append "<li></li>"
+      #while $(".connected>li").length < 40
+      #  $(".connected").append "<li></li>"
 
 
 

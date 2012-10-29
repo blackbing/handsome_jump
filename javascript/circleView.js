@@ -21,7 +21,7 @@
         return scanCallbacks = wifi.scan(callbacks);
       },
       ipfound: function(data) {
-        var $avators, avatorUrl, ip, random_idx;
+        var $avator, avatorPos, avatorUrl, ip;
         console.log('ipfound', data);
         ip = data.ip;
         avatorUrl = data.url;
@@ -30,16 +30,49 @@
             backgroundImage: "url(" + avatorUrl + ")"
           }).fadeIn();
         } else {
-          $avators = $('.connected li').not('.avator');
-          random_idx = Math.floor(Math.random() * $avators.length);
-          return $avators.eq(random_idx).hide().addClass('avator img-circle').css({
-            backgroundImage: "url(" + avatorUrl + ")"
-          }).fadeIn();
+          /*
+                  $avators = $('.connected li').not('.avator')
+                  random_idx = Math.floor(Math.random()*$avators.length)
+                  $avators.eq(random_idx)
+                    .hide()
+                    .addClass('avator img-circle')
+                    .css(
+                      backgroundImage: "url(#{avatorUrl})"
+                    )
+                    .fadeIn()
+          */
+
+          avatorPos = this.getBlankAvatorPos();
+          $avator = $('<div />', {
+            "class": 'avator img-circle'
+          }).css({
+            backgroundImage: "url(" + avatorUrl + ")",
+            left: avatorPos.left,
+            top: avatorPos.top
+          });
+          return this.$('.connected').append($avator);
         }
       },
+      getBlankAvatorPos: (function() {
+        var avator;
+        avator = {
+          width: 100,
+          height: 100
+        };
+        return function() {
+          var canvas, pos;
+          canvas = {
+            width: this.$('.connected').width(),
+            height: this.$('.connected').height()
+          };
+          return pos = {
+            left: Math.floor(Math.random() * (canvas.width - avator.width)),
+            top: Math.floor(Math.random() * (canvas.height - avator.height))
+          };
+        };
+      })(),
       drawCircle: function() {
-        var $c, $circle, $handsomeJump, $inner, innerWidth, _results;
-        console.log('resized');
+        var $c, $circle, $handsomeJump, $inner, innerWidth;
         $circle = this.$(".circle");
         $inner = $circle;
         $handsomeJump = this.$(".handsome-jump");
@@ -48,19 +81,12 @@
           height: innerWidth,
           width: innerWidth
         });
-        console.log($circle, innerWidth);
         while ($inner.width() > 300) {
-          console.log($inner.width());
           $c = $("<div class=\"circle-inner center\" />");
           $inner.append($c);
           $inner = $c;
         }
-        this.$('.circle-inner').last().append('<div class="myself center" />');
-        _results = [];
-        while ($(".connected>li").length < 40) {
-          _results.push($(".connected").append("<li></li>"));
-        }
-        return _results;
+        return this.$('.circle-inner').last().append('<div class="myself center" />');
       },
       initialize: function() {
         return console.log('initialize');
