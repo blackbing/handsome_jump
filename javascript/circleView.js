@@ -54,15 +54,16 @@
         }
       },
       getBlankAvatorPos: (function() {
-        var avator, getRandom, radius_min;
+        var avator, getRandom, radius_delta, radius_min;
         avator = {
           width: 100,
           height: 100
         };
         radius_min = 200;
-        getRandom = function() {
+        radius_delta = 150;
+        getRandom = function(canvas) {
           var r, radius_max, theta;
-          radius_max = radius_min + 250;
+          radius_max = Math.min(canvas.width / 2, canvas.height / 2, radius_min + radius_delta);
           r = (Math.random() * (radius_max - radius_min)) + radius_min;
           theta = Math.random() * 360;
           return [r, theta];
@@ -73,7 +74,8 @@
             width: this.$('.connected').width(),
             height: this.$('.connected').height()
           };
-          ran = getRandom();
+          console.log(canvas);
+          ran = getRandom(canvas);
           r = ran[0];
           theta = ran[1];
           x = (r * Math.cos(theta)) + canvas.width / 2;

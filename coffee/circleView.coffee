@@ -60,8 +60,9 @@ define (require)->
         width: 100
         height: 100
       radius_min = 200
-      getRandom = ()->
-        radius_max = radius_min + 250
+      radius_delta = 150
+      getRandom = (canvas)->
+        radius_max = Math.min(canvas.width/2, canvas.height/2, radius_min + radius_delta)
         r = (Math.random()*(radius_max-radius_min)) + radius_min
         theta = Math.random() * 360
         [r, theta]
@@ -71,8 +72,8 @@ define (require)->
           width: @$('.connected').width()
           height: @$('.connected').height()
 
-        #radius_max = Math.min(canvas.width, canvas.height)/2
-        ran = getRandom()
+        console.log canvas
+        ran = getRandom(canvas)
         r = ran[0]
         theta = ran[1]
 
