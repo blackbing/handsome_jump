@@ -6,15 +6,15 @@
     URL = window.URL || window.webkitURL;
     wifiscan = {
       mySelfIP: (function() {
-        return '192.168.0.104';
+        return '10.116.217.50';
       })(),
       ips: {},
       portocol: 'http',
       port: 7777,
       callbacks: {},
       callback_fun: {
-        getStatusCallback: 'gsc',
-        getInfoCallback: 'gic'
+        getStatusCallback: '__gsc__',
+        getInfoCallback: '__gic__'
       },
       scan: function(callbacks) {
         var mySelfIP,
