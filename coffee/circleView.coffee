@@ -61,28 +61,65 @@ define (require)->
         height: 100
       radius_min = 200
       radius_delta = 150
+      maxAmount = 10
+      thetaMax = 360
+      thetaPool = [] #(num*thetaMax/10 for num in [0..maxAmount])
+      console.log thetaPool
+
+
+      pool = []
+
+      checkOverlap = (pos, pool)->
+        overlap = false
+        for point in pool
+          if((pos.x-(point.x-avator.width))*(pos.x-(point.x+avator.width))<0 and (pos.y-(point.y-avator.height))*(pos.y-(point.y+avator.height))<0 )
+            overlap = true
+            break
+
+        console.log 'checkOverlap!!!!'
+        overlap
+
+      randomNumber = (min, max)->
+        if (max == null)
+          max = min
+          min = 0
+        min + (0 | Math.random() * (max - min + 1))
+
+
+      #canvas is the circle element, decide bounding of area
       getRandom = (canvas)->
         radius_max = Math.min(canvas.width/2, canvas.height/2, radius_min + radius_delta)
         r = (Math.random()*(radius_max-radius_min)) + radius_min
-        theta = Math.random() * 360
-        [r, theta]
+        #theta = Math.random() * 360
+
+        if not thetaPool.length
+          thetaPool = (num*thetaMax/10 for num in [0..maxAmount])
+
+        thetaIndex = randomNumber(0, thetaPool.length-1)
+        theta = thetaPool[thetaIndex]
+        thetaPool.splice(thetaIndex, 1)
+        pos =
+          x : (r * Math.cos(theta)) + canvas.width/2
+          y : r * Math.sin(theta) + canvas.height/2
+
+        chkOverlap = checkOverlap(pos, pool)
+        if chkOverlap
+          arguments.callee.apply(@, arguments)
+        else
+          pool.push pos
+          pos
 
       ->
         canvas =
           width: @$('.connected').width()
           height: @$('.connected').height()
 
-        console.log canvas
-        ran = getRandom(canvas)
-        r = ran[0]
-        theta = ran[1]
+        randomPos = getRandom(canvas)
 
-        x = (r * Math.cos(theta)) + canvas.width/2
-        y = r * Math.sin(theta) + canvas.height/2
 
         pos =
-          left : x-(avator.width/2)
-          top : y-(avator.height/2)
+          left : Math.floor(randomPos.x-(avator.width/2))
+          top : Math.floor(randomPos.y-(avator.height/2))
 
     drawCircle: ()->
 

@@ -54,35 +54,77 @@
         }
       },
       getBlankAvatorPos: (function() {
-        var avator, getRandom, radius_delta, radius_min;
+        var avator, checkOverlap, getRandom, maxAmount, pool, radius_delta, radius_min, randomNumber, thetaMax, thetaPool;
         avator = {
           width: 100,
           height: 100
         };
         radius_min = 200;
         radius_delta = 150;
+        maxAmount = 10;
+        thetaMax = 360;
+        thetaPool = [];
+        console.log(thetaPool);
+        pool = [];
+        checkOverlap = function(pos, pool) {
+          var overlap, point, _i, _len;
+          overlap = false;
+          for (_i = 0, _len = pool.length; _i < _len; _i++) {
+            point = pool[_i];
+            if ((pos.x - (point.x - avator.width)) * (pos.x - (point.x + avator.width)) < 0 && (pos.y - (point.y - avator.height)) * (pos.y - (point.y + avator.height)) < 0) {
+              overlap = true;
+              break;
+            }
+          }
+          console.log('checkOverlap!!!!');
+          return overlap;
+        };
+        randomNumber = function(min, max) {
+          if (max === null) {
+            max = min;
+            min = 0;
+          }
+          return min + (0 | Math.random() * (max - min + 1));
+        };
         getRandom = function(canvas) {
-          var r, radius_max, theta;
+          var chkOverlap, num, pos, r, radius_max, theta, thetaIndex;
           radius_max = Math.min(canvas.width / 2, canvas.height / 2, radius_min + radius_delta);
           r = (Math.random() * (radius_max - radius_min)) + radius_min;
-          theta = Math.random() * 360;
-          return [r, theta];
+          if (!thetaPool.length) {
+            thetaPool = (function() {
+              var _i, _results;
+              _results = [];
+              for (num = _i = 0; 0 <= maxAmount ? _i <= maxAmount : _i >= maxAmount; num = 0 <= maxAmount ? ++_i : --_i) {
+                _results.push(num * thetaMax / 10);
+              }
+              return _results;
+            })();
+          }
+          thetaIndex = randomNumber(0, thetaPool.length - 1);
+          theta = thetaPool[thetaIndex];
+          thetaPool.splice(thetaIndex, 1);
+          pos = {
+            x: (r * Math.cos(theta)) + canvas.width / 2,
+            y: r * Math.sin(theta) + canvas.height / 2
+          };
+          chkOverlap = checkOverlap(pos, pool);
+          if (chkOverlap) {
+            return arguments.callee.apply(this, arguments);
+          } else {
+            pool.push(pos);
+            return pos;
+          }
         };
         return function() {
-          var canvas, pos, r, ran, theta, x, y;
+          var canvas, pos, randomPos;
           canvas = {
             width: this.$('.connected').width(),
             height: this.$('.connected').height()
           };
-          console.log(canvas);
-          ran = getRandom(canvas);
-          r = ran[0];
-          theta = ran[1];
-          x = (r * Math.cos(theta)) + canvas.width / 2;
-          y = r * Math.sin(theta) + canvas.height / 2;
+          randomPos = getRandom(canvas);
           return pos = {
-            left: x - (avator.width / 2),
-            top: y - (avator.height / 2)
+            left: Math.floor(randomPos.x - (avator.width / 2)),
+            top: Math.floor(randomPos.y - (avator.height / 2))
           };
         };
       })(),
