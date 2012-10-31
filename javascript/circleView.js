@@ -54,7 +54,7 @@
         }
       },
       getBlankAvatorPos: (function() {
-        var avator, checkOverlap, getRandom, maxAmount, pool, radius_delta, radius_min, randomNumber, thetaMax, thetaPool;
+        var avator, checkOverlap, getRandom, maxAmount, pool, radius_delta, radius_min, randomNumber, thetaMax;
         avator = {
           width: 100,
           height: 100
@@ -63,8 +63,6 @@
         radius_delta = 150;
         maxAmount = 10;
         thetaMax = 360;
-        thetaPool = [];
-        console.log(thetaPool);
         pool = [];
         checkOverlap = function(pos, pool) {
           var overlap, point, _i, _len;
@@ -87,25 +85,14 @@
           return min + (0 | Math.random() * (max - min + 1));
         };
         getRandom = function(canvas) {
-          var chkOverlap, num, pos, r, radius_max, theta, thetaIndex;
+          var chkOverlap, myselfOffset, pos, r, radius_max, theta;
           radius_max = Math.min(canvas.width / 2, canvas.height / 2, radius_min + radius_delta);
           r = (Math.random() * (radius_max - radius_min)) + radius_min;
-          if (!thetaPool.length) {
-            thetaPool = (function() {
-              var _i, _results;
-              _results = [];
-              for (num = _i = 0; 0 <= maxAmount ? _i <= maxAmount : _i >= maxAmount; num = 0 <= maxAmount ? ++_i : --_i) {
-                _results.push(num * thetaMax / 10);
-              }
-              return _results;
-            })();
-          }
-          thetaIndex = randomNumber(0, thetaPool.length - 1);
-          theta = thetaPool[thetaIndex];
-          thetaPool.splice(thetaIndex, 1);
+          theta = Math.random() * 360;
+          myselfOffset = this.$('.myself').offset();
           pos = {
-            x: (r * Math.cos(theta)) + canvas.width / 2,
-            y: r * Math.sin(theta) + canvas.height / 2
+            x: (r * Math.sin(theta)) + myselfOffset.left,
+            y: (r * Math.cos(theta)) + myselfOffset.top
           };
           chkOverlap = checkOverlap(pos, pool);
           if (chkOverlap) {
@@ -123,8 +110,8 @@
           };
           randomPos = getRandom(canvas);
           return pos = {
-            left: Math.floor(randomPos.x - (avator.width / 2)),
-            top: Math.floor(randomPos.y - (avator.height / 2))
+            left: Math.floor(randomPos.x) + 10,
+            top: Math.floor(randomPos.y) + 10
           };
         };
       })(),

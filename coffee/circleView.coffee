@@ -63,8 +63,6 @@ define (require)->
       radius_delta = 150
       maxAmount = 10
       thetaMax = 360
-      thetaPool = [] #(num*thetaMax/10 for num in [0..maxAmount])
-      console.log thetaPool
 
 
       pool = []
@@ -90,17 +88,14 @@ define (require)->
       getRandom = (canvas)->
         radius_max = Math.min(canvas.width/2, canvas.height/2, radius_min + radius_delta)
         r = (Math.random()*(radius_max-radius_min)) + radius_min
-        #theta = Math.random() * 360
+        #r = 225
+        theta = Math.random() * 360
 
-        if not thetaPool.length
-          thetaPool = (num*thetaMax/10 for num in [0..maxAmount])
-
-        thetaIndex = randomNumber(0, thetaPool.length-1)
-        theta = thetaPool[thetaIndex]
-        thetaPool.splice(thetaIndex, 1)
+        myselfOffset = @$('.myself').offset()
         pos =
-          x : (r * Math.cos(theta)) + canvas.width/2
-          y : r * Math.sin(theta) + canvas.height/2
+          x : (r * Math.sin(theta)) + myselfOffset.left
+          y : (r * Math.cos(theta)) + myselfOffset.top
+
 
         chkOverlap = checkOverlap(pos, pool)
         if chkOverlap
@@ -118,8 +113,8 @@ define (require)->
 
 
         pos =
-          left : Math.floor(randomPos.x-(avator.width/2))
-          top : Math.floor(randomPos.y-(avator.height/2))
+          left : Math.floor(randomPos.x) + 10
+          top : Math.floor(randomPos.y) + 10
 
     drawCircle: ()->
 
