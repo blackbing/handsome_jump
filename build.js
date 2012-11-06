@@ -1,5 +1,5 @@
 {
-  "baseUrl":'javascript',
+  "baseUrl":'javascripts',
   optimize: "none",
   hbs : {
     templateExtension : 'hbs',
@@ -14,5 +14,5 @@
     "json2" : "vender/require-handlebars-plugin/hbs/json2"
   },
   name: "main",
-  out: 'javascript/main-built.js'
+  out: 'javascripts/main-built.js'
 }

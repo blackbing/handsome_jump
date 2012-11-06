@@ -6,7 +6,7 @@ define (require)->
   wifiscan =
     mySelfIP: do ->
       #FIXME: test ip
-      return '10.116.217.50'
+      return '10.116.220.175'
 
     ips: {}
     portocol: 'http'

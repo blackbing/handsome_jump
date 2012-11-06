@@ -6,7 +6,7 @@
     URL = window.URL || window.webkitURL;
     wifiscan = {
       mySelfIP: (function() {
-        return '10.116.217.50';
+        return '10.116.220.175';
       })(),
       ips: {},
       portocol: 'http',

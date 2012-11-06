@@ -2,9 +2,9 @@ define (require)->
   demoData =
     [
       {
-        url: "https://graph.facebook.com/1627073717/picture?type=normal"
-        ip: "10.116.217.50"
-        name: "楊秉桓"
+        ip: 'x.x.x.x'
+        url: 'https://graph.facebook.com/1012622593/picture?type=normal'
+        name: 'James Wu'
       }
       {
         ip: 'x.x.x.x'
@@ -25,61 +25,6 @@ define (require)->
         ip: 'x.x.x.x'
         url: 'https://graph.facebook.com/501753091/picture?type=normal'
         name: 'Pai-Cheng Tao'
-      }
-      {
-        ip: 'x.x.x.x'
-        url: 'https://graph.facebook.com/582724207/picture?type=normal'
-        name: '高偉格'
-      }
-      {
-        ip: 'x.x.x.x'
-        url: 'https://graph.facebook.com/501012346/picture?type=normal'
-        name: 'Chunghe Fang'
-      }
-      {
-        ip: 'x.x.x.x'
-        url: 'https://graph.facebook.com/1170084116/picture?type=normal'
-        name: 'Chris Lee'
-      }
-      {
-        ip: 'x.x.x.x'
-        url: 'https://graph.facebook.com/587439623/picture?type=normal'
-        name: 'Michael Lin'
-      }
-      {
-        ip: 'x.x.x.x'
-        url: 'https://graph.facebook.com/501753091/picture?type=normal'
-        name: 'Pai-Cheng Tao'
-      }
-      {
-        ip: 'x.x.x.x'
-        url: 'https://graph.facebook.com/582724207/picture?type=normal'
-        name: '高偉格'
-      }
-      {
-        ip: 'x.x.x.x'
-        url: 'https://graph.facebook.com/501012346/picture?type=normal'
-        name: 'Chunghe Fang'
-      }
-      {
-        ip: 'x.x.x.x'
-        url: 'https://graph.facebook.com/1170084116/picture?type=normal'
-        name: 'Chris Lee'
-      }
-      {
-        ip: 'x.x.x.x'
-        url: 'https://graph.facebook.com/587439623/picture?type=normal'
-        name: 'Michael Lin'
-      }
-      {
-        ip: 'x.x.x.x'
-        url: 'https://graph.facebook.com/501753091/picture?type=normal'
-        name: 'Pai-Cheng Tao'
-      }
-      {
-        ip: 'x.x.x.x'
-        url: 'https://graph.facebook.com/582724207/picture?type=normal'
-        name: '高偉格'
       }
 
     ]

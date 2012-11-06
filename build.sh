@@ -1,3 +1,3 @@
 #/bin/sh
 r.js -o build.js
-cp -r javascript stylesheets circle.html  build/
+cp -r javascripts stylesheets circle.html  build/
