@@ -28,6 +28,46 @@
         ip: 'x.x.x.x',
         url: 'https://graph.facebook.com/582724207/picture?type=normal',
         name: '高偉格'
+      }, {
+        ip: 'x.x.x.x',
+        url: 'https://graph.facebook.com/501012346/picture?type=normal',
+        name: 'Chunghe Fang'
+      }, {
+        ip: 'x.x.x.x',
+        url: 'https://graph.facebook.com/1170084116/picture?type=normal',
+        name: 'Chris Lee'
+      }, {
+        ip: 'x.x.x.x',
+        url: 'https://graph.facebook.com/587439623/picture?type=normal',
+        name: 'Michael Lin'
+      }, {
+        ip: 'x.x.x.x',
+        url: 'https://graph.facebook.com/501753091/picture?type=normal',
+        name: 'Pai-Cheng Tao'
+      }, {
+        ip: 'x.x.x.x',
+        url: 'https://graph.facebook.com/582724207/picture?type=normal',
+        name: '高偉格'
+      }, {
+        ip: 'x.x.x.x',
+        url: 'https://graph.facebook.com/501012346/picture?type=normal',
+        name: 'Chunghe Fang'
+      }, {
+        ip: 'x.x.x.x',
+        url: 'https://graph.facebook.com/1170084116/picture?type=normal',
+        name: 'Chris Lee'
+      }, {
+        ip: 'x.x.x.x',
+        url: 'https://graph.facebook.com/587439623/picture?type=normal',
+        name: 'Michael Lin'
+      }, {
+        ip: 'x.x.x.x',
+        url: 'https://graph.facebook.com/501753091/picture?type=normal',
+        name: 'Pai-Cheng Tao'
+      }, {
+        ip: 'x.x.x.x',
+        url: 'https://graph.facebook.com/582724207/picture?type=normal',
+        name: '高偉格'
       }
     ];
     showIdx = 0;

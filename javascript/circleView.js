@@ -54,15 +54,18 @@
         }
       },
       getBlankAvatorPos: (function() {
-        var avator, checkOverlap, getRandom, maxAmount, pool, radius_delta, radius_min, randomNumber, thetaMax;
+        var avator, avatorPool, checkOverlap, getRandom, maxAmount, pool, radiusCount, radius_delta, radius_min, randomNumber, thetaMax;
         avator = {
           width: 100,
-          height: 100
+          height: 100,
+          margin: 80
         };
         radius_min = 200;
         radius_delta = 150;
         maxAmount = 10;
         thetaMax = 360;
+        radiusCount = 0;
+        avatorPool = [];
         pool = [];
         checkOverlap = function(pos, pool) {
           var overlap, point, _i, _len;
@@ -85,20 +88,34 @@
           return min + (0 | Math.random() * (max - min + 1));
         };
         getRandom = function(canvas) {
-          var chkOverlap, myselfOffset, pos, r, radius_max, theta;
+          var avatorCountPerCircle, chkOverlap, circumference, myselfOffset, pos, r, radius_max, theta, thetaIndex, _i, _results;
           radius_max = Math.min(canvas.width / 2, canvas.height / 2, radius_min + radius_delta);
-          r = (Math.random() * (radius_max - radius_min)) + radius_min;
-          theta = Math.random() * 360;
+          if (avatorPool.length < 1) {
+            radiusCount++;
+          }
+          r = 60 + radiusCount * (avator.width + avator.margin) + (avator.width / 2);
+          circumference = 2 * r * Math.PI;
+          avatorCountPerCircle = Math.floor(circumference / (avator.width + avator.margin));
+          if (avatorPool.length < 1) {
+            avatorPool = (function() {
+              _results = [];
+              for (var _i = 0; 0 <= avatorCountPerCircle ? _i <= avatorCountPerCircle : _i >= avatorCountPerCircle; 0 <= avatorCountPerCircle ? _i++ : _i--){ _results.push(_i); }
+              return _results;
+            }).apply(this);
+          }
+          thetaIndex = randomNumber(0, avatorPool.length - 1);
+          theta = avatorPool[thetaIndex] / avatorCountPerCircle * thetaMax;
           myselfOffset = this.$('.myself').offset();
           pos = {
             x: (r * Math.sin(theta)) + myselfOffset.left,
             y: (r * Math.cos(theta)) + myselfOffset.top
           };
-          chkOverlap = checkOverlap(pos, pool);
+          chkOverlap = false;
           if (chkOverlap) {
             return arguments.callee.apply(this, arguments);
           } else {
             pool.push(pos);
+            avatorPool.splice(thetaIndex, 1);
             return pos;
           }
         };

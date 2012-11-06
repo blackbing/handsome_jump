@@ -59,12 +59,14 @@ define (require)->
       avator =
         width: 100
         height: 100
+        margin: 80
       radius_min = 200
       radius_delta = 150
       maxAmount = 10
       thetaMax = 360
 
-
+      radiusCount = 0
+      avatorPool = []
       pool = []
 
       checkOverlap = (pos, pool)->
@@ -87,9 +89,19 @@ define (require)->
       #canvas is the circle element, decide bounding of area
       getRandom = (canvas)->
         radius_max = Math.min(canvas.width/2, canvas.height/2, radius_min + radius_delta)
-        r = (Math.random()*(radius_max-radius_min)) + radius_min
-        #r = 225
-        theta = Math.random() * 360
+        if avatorPool.length <1
+          radiusCount++
+
+        r = 60 + radiusCount*(avator.width+avator.margin) + (avator.width/2)
+        circumference = 2*r*Math.PI
+        avatorCountPerCircle = Math.floor(circumference /(avator.width+avator.margin))
+        if avatorPool.length <1
+          avatorPool = [0..avatorCountPerCircle]
+
+
+        thetaIndex = randomNumber(0, avatorPool.length-1)
+        theta = avatorPool[thetaIndex]/avatorCountPerCircle * thetaMax
+        #theta = Math.random() * 360
 
         myselfOffset = @$('.myself').offset()
         pos =
@@ -97,11 +109,12 @@ define (require)->
           y : (r * Math.cos(theta)) + myselfOffset.top
 
 
-        chkOverlap = checkOverlap(pos, pool)
+        chkOverlap = false #checkOverlap(pos, pool)
         if chkOverlap
           arguments.callee.apply(@, arguments)
         else
           pool.push pos
+          avatorPool.splice(thetaIndex, 1)
           pos
 
       ->
