@@ -6,7 +6,7 @@
     URL = window.URL || window.webkitURL;
     wifiscan = {
       mySelfIP: (function() {
-        return '10.116.220.175';
+        return window.location.hostname;
       })(),
       ips: {},
       portocol: 'http',
@@ -102,8 +102,9 @@
         var filter, testData, _dfr;
         _dfr = $.Deferred();
         testData = {
-          0: "10.116.220.12",
-          1: "10.116.220.82"
+          0: "10.116.209.46",
+          1: "10.116.209.81",
+          2: "10.116.215.130"
         };
         filter = _dfr.pipe(function(res) {
           var arr, idx;

@@ -12,6 +12,6 @@ define (require)->
 
 
   #FIXME: for demo
-  demoData = require 'demo-data'
-  demoData.show(circleView)
+  #demoData = require 'demo-data'
+  #demoData.show(circleView)
 
