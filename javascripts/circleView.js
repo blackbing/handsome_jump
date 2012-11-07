@@ -20,32 +20,34 @@
         });
         return scanCallbacks = wifi.scan(callbacks);
       },
+      preloadImg: function(src) {
+        var _dfr, _img;
+        _dfr = $.Deferred();
+        _img = new Image();
+        _img.onload = _dfr.resolve;
+        _img.onerror = _dfr.reject;
+        _img.src = src;
+        return _dfr.promise();
+      },
       ipfound: function(data) {
-        var $avator, avatorPos, avatorUrl, ip, name;
+        var $avator, $myself, avatorPos, avatorUrl, ip, name,
+          _this = this;
         console.log('ipfound', data);
         ip = data.ip;
         name = data.name;
         avatorUrl = data.url;
         if (ip === wifi.mySelfIP) {
-          return $('.myself').addClass('avator img-circle').css({
+          $myself = $('.myself');
+          $myself.addClass('avator img-circle').css({
             opacity: 0,
             backgroundImage: "url(" + avatorUrl + ")"
-          }).append("<em>" + name + "</em>").animate({
-            opacity: 1
+          }).append("<em>" + name + "</em>");
+          return this.preloadImg(avatorUrl).done(function() {
+            return $myself.animate({
+              opacity: 1
+            });
           });
         } else {
-          /*
-                  $avators = $('.connected li').not('.avator')
-                  random_idx = Math.floor(Math.random()*$avators.length)
-                  $avators.eq(random_idx)
-                    .hide()
-                    .addClass('avator img-circle')
-                    .css(
-                      backgroundImage: "url(#{avatorUrl})"
-                    )
-                    .fadeIn()
-          */
-
           avatorPos = this.getBlankAvatorPos();
           $avator = $('<div />', {
             "class": 'avator img-circle'
@@ -56,8 +58,10 @@
             top: avatorPos.top
           }).append("<em>" + name + "</em>");
           this.$('.connected').append($avator);
-          return $avator.animate({
-            opacity: 1
+          return this.preloadImg(avatorUrl).done(function() {
+            return $avator.animate({
+              opacity: 1
+            });
           });
         }
       },

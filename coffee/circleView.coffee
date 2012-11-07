@@ -18,6 +18,16 @@ define (require)->
       )
       scanCallbacks = wifi.scan(callbacks)
 
+    preloadImg: (src)->
+      _dfr = $.Deferred()
+      _img = new Image()
+      _img.onload = _dfr.resolve
+      _img.onerror = _dfr.reject
+      _img.src = src
+
+      _dfr.promise()
+
+
 
     ipfound: (data)->
       console.log('ipfound', data)
@@ -25,30 +35,23 @@ define (require)->
       name = data.name
       avatorUrl = data.url
       if ip is wifi.mySelfIP
-        $('.myself')
+        $myself = $('.myself')
+        $myself
           .addClass('avator img-circle')
           .css(
             opacity: 0
             backgroundImage: "url(#{avatorUrl})"
           )
           .append("<em>#{name}</em>")
-          .animate(
+
+        @preloadImg(avatorUrl).done(=>
+          $myself.animate(
             opacity: 1
           )
+        )
 
       else
 
-        ###
-        $avators = $('.connected li').not('.avator')
-        random_idx = Math.floor(Math.random()*$avators.length)
-        $avators.eq(random_idx)
-          .hide()
-          .addClass('avator img-circle')
-          .css(
-            backgroundImage: "url(#{avatorUrl})"
-          )
-          .fadeIn()
-        ###
         avatorPos = @getBlankAvatorPos()
         $avator = $('<div />',
           class: 'avator img-circle'
@@ -59,8 +62,10 @@ define (require)->
           top: avatorPos.top
         ).append("<em>#{name}</em>")
         @$('.connected').append($avator)
-        $avator.animate(
-          opacity: 1
+        @preloadImg(avatorUrl).done(=>
+          $avator.animate(
+            opacity: 1
+          )
         )
 
     getBlankAvatorPos: do ->
