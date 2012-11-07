@@ -20,9 +20,10 @@
         return scanCallbacks = wifi.scan(callbacks);
       },
       ipfound: function(data) {
-        var $avator, avatorPos, avatorUrl, ip;
+        var $avator, avatorPos, avatorUrl, ip, name;
         console.log('ipfound', data);
         ip = data.ip;
+        name = data.name;
         avatorUrl = data.url;
         if (ip === wifi.mySelfIP) {
           return $('.myself').hide().addClass('avator img-circle').css({
@@ -47,7 +48,7 @@
             backgroundImage: "url(" + avatorUrl + ")",
             left: avatorPos.left,
             top: avatorPos.top
-          });
+          }).append("<em>" + name + "</em>");
           return this.$('.connected').append($avator);
         }
       },

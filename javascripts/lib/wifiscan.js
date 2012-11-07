@@ -106,8 +106,7 @@
         */
         filter = _dfr.pipe(function(res) {
           var arr, idx;
-          console.log(res);
-          res = $.parseJSON(res);
+          if (typeof res !== 'object') res = $.parseJSON(res);
           console.log('filter', res);
           arr = [];
           for (idx in res) {

@@ -98,8 +98,8 @@ define (require)->
       ###
 
       filter = _dfr.pipe((res)->
-        console.log res
-        res = $.parseJSON(res)
+        if typeof res isnt 'object'
+          res = $.parseJSON(res)
         console.log 'filter', res
         arr = []
         for idx of res

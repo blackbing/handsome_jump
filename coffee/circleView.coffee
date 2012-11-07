@@ -22,6 +22,7 @@ define (require)->
     ipfound: (data)->
       console.log('ipfound', data)
       ip = data.ip
+      name = data.name
       avatorUrl = data.url
       if ip is wifi.mySelfIP
         $('.myself')
@@ -52,7 +53,7 @@ define (require)->
           backgroundImage: "url(#{avatorUrl})"
           left: avatorPos.left
           top: avatorPos.top
-        )
+        ).append("<em>#{name}</em>")
         @$('.connected').append($avator)
 
     getBlankAvatorPos: do ->
