@@ -26,12 +26,15 @@ define (require)->
       avatorUrl = data.url
       if ip is wifi.mySelfIP
         $('.myself')
-          .hide()
           .addClass('avator img-circle')
           .css(
+            opacity: 0
             backgroundImage: "url(#{avatorUrl})"
           )
-          .fadeIn()
+          .append("<em>#{name}</em>")
+          .animate(
+            opacity: 1
+          )
 
       else
 
@@ -50,11 +53,15 @@ define (require)->
         $avator = $('<div />',
           class: 'avator img-circle'
         ).css(
+          opacity: 0
           backgroundImage: "url(#{avatorUrl})"
           left: avatorPos.left
           top: avatorPos.top
         ).append("<em>#{name}</em>")
         @$('.connected').append($avator)
+        $avator.animate(
+          opacity: 1
+        )
 
     getBlankAvatorPos: do ->
       avator =

@@ -2,6 +2,11 @@ define (require)->
   demoData =
     [
       {
+        ip: 'demo.blackbing.net'
+        url: 'https://graph.facebook.com/1627073717/picture?type=normal'
+        name: '楊秉桓'
+      }
+      {
         ip: 'x.x.x.x'
         url: 'https://graph.facebook.com/1012622593/picture?type=normal'
         name: 'James Wu'

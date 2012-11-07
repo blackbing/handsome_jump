@@ -27,9 +27,12 @@
         name = data.name;
         avatorUrl = data.url;
         if (ip === wifi.mySelfIP) {
-          return $('.myself').hide().addClass('avator img-circle').css({
+          return $('.myself').addClass('avator img-circle').css({
+            opacity: 0,
             backgroundImage: "url(" + avatorUrl + ")"
-          }).fadeIn();
+          }).append("<em>" + name + "</em>").animate({
+            opacity: 1
+          });
         } else {
           /*
                   $avators = $('.connected li').not('.avator')
@@ -47,11 +50,15 @@
           $avator = $('<div />', {
             "class": 'avator img-circle'
           }).css({
+            opacity: 0,
             backgroundImage: "url(" + avatorUrl + ")",
             left: avatorPos.left,
             top: avatorPos.top
           }).append("<em>" + name + "</em>");
-          return this.$('.connected').append($avator);
+          this.$('.connected').append($avator);
+          return $avator.animate({
+            opacity: 1
+          });
         }
       },
       getBlankAvatorPos: (function() {
