@@ -84,7 +84,6 @@ define (require)->
     ###
 
     getServerList: (ip)->
-      ###
       url = "//#{ip}:#{@port}/getserverlist"
       _dfr = $.get(url)
       ###
@@ -96,8 +95,11 @@ define (require)->
         2: "10.116.215.130"
       }
       #testing data end
+      ###
 
       filter = _dfr.pipe((res)->
+        console.log res
+        res = $.parseJSON(res)
         console.log 'filter', res
         arr = []
         for idx of res
@@ -105,7 +107,7 @@ define (require)->
           arr.push ip
         arr
       )
-      _dfr.resolve(testData)
+      #_dfr.resolve(testData)
       filter
 
     getIPListFromIP: (privateIP)->
