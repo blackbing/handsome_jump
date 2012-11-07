@@ -26,6 +26,86 @@ define (require)->
         url: 'https://graph.facebook.com/501753091/picture?type=normal'
         name: 'Pai-Cheng Tao'
       }
+      {
+        ip: 'x.x.x.x'
+        url: 'http://placekitten.com/100/100'
+        name: 'placekitten'
+      }
+      {
+        ip: 'x.x.x.x'
+        url: 'http://placekitten.com/100/100'
+        name: 'placekitten'
+      }
+      {
+        ip: 'x.x.x.x'
+        url: 'http://placekitten.com/100/100'
+        name: 'placekitten'
+      }
+      {
+        ip: 'x.x.x.x'
+        url: 'http://placekitten.com/100/100'
+        name: 'placekitten'
+      }
+      {
+        ip: 'x.x.x.x'
+        url: 'http://placekitten.com/100/100'
+        name: 'placekitten'
+      }
+      {
+        ip: 'x.x.x.x'
+        url: 'http://placekitten.com/100/100'
+        name: 'placekitten'
+      }
+      {
+        ip: 'x.x.x.x'
+        url: 'http://placekitten.com/100/100'
+        name: 'placekitten'
+      }
+      {
+        ip: 'x.x.x.x'
+        url: 'http://placekitten.com/100/100'
+        name: 'placekitten'
+      }
+      {
+        ip: 'x.x.x.x'
+        url: 'http://placekitten.com/100/100'
+        name: 'placekitten'
+      }
+      {
+        ip: 'x.x.x.x'
+        url: 'http://placekitten.com/100/100'
+        name: 'placekitten'
+      }
+      {
+        ip: 'x.x.x.x'
+        url: 'http://placekitten.com/100/100'
+        name: 'placekitten'
+      }
+      {
+        ip: 'x.x.x.x'
+        url: 'http://placekitten.com/100/100'
+        name: 'placekitten'
+      }
+      {
+        ip: 'x.x.x.x'
+        url: 'http://placekitten.com/100/100'
+        name: 'placekitten'
+      }
+      {
+        ip: 'x.x.x.x'
+        url: 'http://placekitten.com/100/100'
+        name: 'placekitten'
+      }
+      {
+        ip: 'x.x.x.x'
+        url: 'http://placekitten.com/100/100'
+        name: 'placekitten'
+      }
+      {
+        ip: 'x.x.x.x'
+        url: 'http://placekitten.com/100/100'
+        name: 'placekitten'
+      }
 
     ]
 
