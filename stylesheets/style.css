@@ -145,9 +145,10 @@ body {
   cursor: pointer;
   -webkit-box-shadow: 0px 0px 15px 2px #000;
   box-shadow: 0px 0px 15px 2px #000;
+  -webkit-transition: all .2s ease-in-out;
 }
 
-/* line 119, ../sass/style.scss */
+/* line 120, ../sass/style.scss */
 .avator > em {
   text-align: center;
   color: white;
@@ -159,6 +160,11 @@ body {
 }
 
 /* line 129, ../sass/style.scss */
+.avator:hover {
+  -webkit-transform: scale(1.1);
+}
+
+/* line 133, ../sass/style.scss */
 .control {
   position: absolute;
   z-index: 5;
